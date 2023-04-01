@@ -1,0 +1,53 @@
+<template>
+  <div class="app">
+    <div class="content">
+      <AppInfo />
+      <div class="search-panel">
+        <SearchPanel />
+        <AppFilter />
+      </div>
+      <MovieList />
+      <MovieAdd />
+    </div>
+  </div>
+</template>
+
+<script>
+import AppInfo from "../appInfo/AppInfo.vue";
+import SearchPanel from "../searchPanel/SearchPanel.vue";
+import AppFilter from "../appFilter/AppFilter.vue";
+import MovieList from "../movieList/MovieList.vue";
+import MovieAdd from "../movieAdd/MovieAdd.vue";
+
+export default {
+  components: {
+    AppInfo,
+    SearchPanel,
+    AppFilter,
+    MovieList,
+    MovieAdd,
+  },
+};
+</script>
+
+<style>
+.app {
+  width: 100vw;
+  height: 100vh;
+  color: #000;
+}
+.content {
+  width: 60vw;
+  min-height: 700px;
+  background-color: #fff;
+  margin: 0 auto;
+  padding: 5rem 0;
+}
+.search-panel {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #fcfaf5;
+  border-radius: 4px;
+  box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.15);
+}
+</style>

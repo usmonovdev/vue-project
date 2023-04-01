@@ -1,12 +1,12 @@
 <template>
   <div class="app">
     <div class="content">
-      <AppInfo />
+      <AppInfo :moviesLength="movies.length" :viewedMovie="movies.filter(e => e.favourite).length" />
       <div class="search-panel">
         <SearchPanel />
         <AppFilter />
       </div>
-      <MovieList />
+      <MovieList :movies="movies"/>
       <MovieAdd />
     </div>
   </div>
@@ -26,6 +26,30 @@ export default {
     AppFilter,
     MovieList,
     MovieAdd,
+  },
+  data() {
+    return {
+      movies: [
+        {
+          name: "Omar",
+          viewers: 811,
+          favourite: false,
+          like: true
+        },
+        {
+          name: "Empire of osman",
+          viewers: 632,
+          favourite: false,
+          like: false
+        },
+        {
+          name: "Ertugrul",
+          viewers: 745,
+          favourite: true,
+          like: false
+        }
+      ],
+    };
   },
 };
 </script>

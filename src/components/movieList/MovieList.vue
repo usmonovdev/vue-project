@@ -1,15 +1,21 @@
 <template>
   <ul class="movie-list list-group">
-    <MovieItems />
-    <MovieItems />
-    <MovieItems />
+    <MovieItems v-for="movie in movies" v-bind:movie="movie" />
   </ul>
 </template>
 
 <script>
 import MovieItems from "../movieItems/MovieItems.vue";
 
-export default { components: { MovieItems } };
+export default {
+  components: { MovieItems },
+  props: {
+    movies: {
+      type: Array,
+      required: true,
+    }
+  }
+};
 </script>
 
 <style scoped>

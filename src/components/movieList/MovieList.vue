@@ -1,6 +1,6 @@
 <template>
   <ul class="movie-list list-group">
-    <MovieItems v-for="movie in movies" :movie="movie" />
+    <MovieItems v-for="movie in movies" :movie="movie" :key="movie.id" @handleLike="onLike"/>
   </ul>
 </template>
 
@@ -13,6 +13,11 @@ export default {
     movies: {
       type: Array,
       required: true,
+    }
+  },
+  methods: {
+    onLike(e) {
+      this.$emit("handleLike", e)
     }
   }
 };

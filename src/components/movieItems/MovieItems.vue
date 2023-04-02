@@ -3,7 +3,7 @@
     class="list-group-item d-flex justify-content-between"
     :class="[{ like: movie.like }, { favourite: movie.favourite }]"
   >
-    <span class="list-group-item-label">{{ movie.name }}</span>
+    <span class="list-group-item-label" @click="() => handleLike(movie.id)">{{ movie.name }}</span>
     <input
       type="number"
       class="list-group-item-input"
@@ -28,6 +28,11 @@ export default {
       required: true,
     },
   },
+  methods: {
+    handleLike(e) {
+      this.$emit("handleLike", e)
+    }
+  }
 };
 </script>
 

@@ -6,10 +6,9 @@
         <SearchPanel />
         <AppFilter />
       </div>
-      <MovieList :movies="movies"/>
+      <MovieList :movies="movies" @handleLike="handleLike"/>
       <MovieAdd @createMovie="createMovie"/>
     </div>
-    <button @click="handleconsole">click</button>
   </div>
 </template>
 
@@ -35,19 +34,22 @@ export default {
           name: "Omar",
           viewers: 811,
           favourite: false,
-          like: true
+          like: true,
+          id: 1680439521234
         },
         {
           name: "Empire of osman",
           viewers: 632,
           favourite: false,
-          like: false
+          like: false,
+          id: 1680439523241
         },
         {
           name: "Ertugrul",
           viewers: 745,
           favourite: true,
-          like: false
+          like: false,
+          id: 1680439524567
         }
       ],
     };
@@ -56,6 +58,14 @@ export default {
     createMovie(item) {
       this.movies.push(item)
       console.log(item);
+    },
+    handleLike(e) {
+      const arr = this.movies.map(item => {
+        if (item.id == e) {
+          item.like = !item.like
+          console.log(item);
+        }
+      })
     }
   }
 };

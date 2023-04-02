@@ -8,7 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react-icons": "^4.8.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
   },

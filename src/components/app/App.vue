@@ -7,8 +7,9 @@
         <AppFilter />
       </div>
       <MovieList :movies="movies"/>
-      <MovieAdd />
+      <MovieAdd @createMovie="createMovie"/>
     </div>
+    <button @click="handleconsole">click</button>
   </div>
 </template>
 
@@ -25,7 +26,7 @@ export default {
     SearchPanel,
     AppFilter,
     MovieList,
-    MovieAdd,
+    MovieAdd
   },
   data() {
     return {
@@ -51,6 +52,12 @@ export default {
       ],
     };
   },
+  methods: {
+    createMovie(item) {
+      this.movies.push(item)
+      console.log(item);
+    }
+  }
 };
 </script>
 

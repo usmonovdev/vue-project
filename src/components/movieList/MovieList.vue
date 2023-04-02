@@ -1,6 +1,6 @@
 <template>
   <ul class="movie-list list-group">
-    <MovieItems v-for="movie in movies" v-bind:movie="movie" />
+    <MovieItems v-for="movie in movies" :movie="movie" />
   </ul>
 </template>
 

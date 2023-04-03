@@ -3,11 +3,31 @@
     type="text"
     class="form-control search-input"
     placeholder="Filmlarni qidirish"
+    :value="term"
+    @input="onChangeHandler"
   />
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    onHandleUpdateTerm: {
+      type: Function,
+      required: true
+    }
+  },
+  data() {
+    return {
+      term: ''
+    }
+  },
+  methods: {
+    onChangeHandler(e) {
+      this.term = e.target.value
+      this.onHandleUpdateTerm(this.term)
+    }
+  }
+};
 </script>
 
 <style scoped>

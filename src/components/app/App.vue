@@ -6,10 +6,10 @@
         :viewedMovie="movies.filter((e) => e.favourite).length"
       />
       <div class="search-panel">
-        <SearchPanel />
+        <SearchPanel :onHandleUpdateTerm="onHandleUpdateTerm" />
         <AppFilter />
       </div>
-      <MovieList :movies="movies" @onToggle="onHandleToggle" @onDelete="onHandleDelete" />
+      <MovieList :movies="onHandleSearch(movies, term)" @onToggle="onHandleToggle" @onDelete="onHandleDelete" />
       <MovieAdd @createMovie="createMovie" />
     </div>
   </div>
@@ -55,6 +55,7 @@ export default {
           id: 1680439524567,
         },
       ],
+      term: ''
     };
   },
   methods: {
@@ -71,6 +72,16 @@ export default {
     },
     onHandleDelete(e) {
       this.movies = this.movies.filter(c => c.id !== e)
+    },
+    onHandleSearch(arr, term) {
+      if (term.length == 0) {
+        return arr
+      }
+
+      return arr.filter(c => c.name.toLowerCase().indexOf(term) > -1)
+    },
+    onHandleUpdateTerm(e) {
+      this.term = e
     }
   },
 };

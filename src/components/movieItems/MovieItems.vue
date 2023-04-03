@@ -3,14 +3,22 @@
     class="list-group-item d-flex justify-content-between"
     :class="[{ like: movie.like }, { favourite: movie.favourite }]"
   >
-    <span class="list-group-item-label" @click="() => handleLike(movie.id)">{{ movie.name }}</span>
+    <span
+      class="list-group-item-label"
+      @click="$emit('onToggle', { id: movie.id, prop: 'like' })"
+      >{{ movie.name }}</span
+    >
     <input
       type="number"
       class="list-group-item-input"
       v-bind:value="movie.viewers"
     />
     <div class="d-flex justify-content-center align-items-center">
-      <button type="button" class="btn btn-cookie btn-sm">
+      <button
+        type="button"
+        class="btn btn-cookie btn-sm"
+        @click="$emit('onToggle', { id: movie.id, prop: 'favourite' })"
+      >
         <i class="fas fa-cookie"></i>
       </button>
       <button type="button" class="btn btn-trash btn-sm">
@@ -27,11 +35,6 @@ export default {
       type: Object,
       required: true,
     },
-  },
-  methods: {
-    handleLike(e) {
-      this.$emit("handleLike", e)
-    }
   }
 };
 </script>

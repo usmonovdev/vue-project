@@ -1,13 +1,16 @@
 <template>
   <div class="app">
     <div class="content">
-      <AppInfo :moviesLength="movies.length" :viewedMovie="movies.filter(e => e.favourite).length" />
+      <AppInfo
+        :moviesLength="movies.length"
+        :viewedMovie="movies.filter((e) => e.favourite).length"
+      />
       <div class="search-panel">
         <SearchPanel />
         <AppFilter />
       </div>
-      <MovieList :movies="movies" @handleLike="handleLike"/>
-      <MovieAdd @createMovie="createMovie"/>
+      <MovieList :movies="movies" @onToggle="onHandleToggle" />
+      <MovieAdd @createMovie="createMovie" />
     </div>
   </div>
 </template>
@@ -25,7 +28,7 @@ export default {
     SearchPanel,
     AppFilter,
     MovieList,
-    MovieAdd
+    MovieAdd,
   },
   data() {
     return {
@@ -35,39 +38,38 @@ export default {
           viewers: 811,
           favourite: false,
           like: true,
-          id: 1680439521234
+          id: 1680439521234,
         },
         {
           name: "Empire of osman",
           viewers: 632,
           favourite: false,
           like: false,
-          id: 1680439523241
+          id: 1680439523241,
         },
         {
           name: "Ertugrul",
           viewers: 745,
           favourite: true,
           like: false,
-          id: 1680439524567
-        }
+          id: 1680439524567,
+        },
       ],
     };
   },
   methods: {
     createMovie(item) {
-      this.movies.push(item)
-      console.log(item);
+      this.movies.push(item);
     },
-    handleLike(e) {
-      const arr = this.movies.map(item => {
-        if (item.id == e) {
-          item.like = !item.like
-          console.log(item);
+    onHandleToggle({ id, prop }) {
+      this.movies = this.movies.map((item) => {
+        if (item.id == id) {
+          return { ...item, [prop]: !item[prop] };
         }
-      })
-    }
-  }
+        return item;
+      });
+    },
+  },
 };
 </script>
 

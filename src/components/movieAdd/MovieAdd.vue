@@ -30,6 +30,7 @@ export default {
   },
   methods: {
     addMovie() {
+      if (!this.name || !this.viewers) return
       const newMovie = {
         name: this.name,
         viewers: this.viewers,

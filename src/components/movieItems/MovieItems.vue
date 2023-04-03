@@ -21,7 +21,7 @@
       >
         <i class="fas fa-cookie"></i>
       </button>
-      <button type="button" class="btn btn-trash btn-sm">
+      <button type="button" class="btn btn-trash btn-sm" @click="$emit('onDelete', movie.id)">
         <i class="fas fa-trash"></i>
       </button>
       <i class="fas fa-star"></i>

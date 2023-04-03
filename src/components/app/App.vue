@@ -9,7 +9,7 @@
         <SearchPanel />
         <AppFilter />
       </div>
-      <MovieList :movies="movies" @onToggle="onHandleToggle" />
+      <MovieList :movies="movies" @onToggle="onHandleToggle" @onDelete="onHandleDelete" />
       <MovieAdd @createMovie="createMovie" />
     </div>
   </div>
@@ -69,13 +69,16 @@ export default {
         return item;
       });
     },
+    onHandleDelete(e) {
+      this.movies = this.movies.filter(c => c.id !== e)
+    }
   },
 };
 </script>
 
 <style>
 .app {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   color: #000;
 }

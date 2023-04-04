@@ -9,7 +9,11 @@
         <SearchPanel :onHandleUpdateTerm="onHandleUpdateTerm" />
         <AppFilter />
       </div>
-      <MovieList :movies="onHandleSearch(movies, term)" @onToggle="onHandleToggle" @onDelete="onHandleDelete" />
+      <MovieList
+        :movies="onHandleFilter(onHandleSearch(movies, term), filter)"
+        @onToggle="onHandleToggle"
+        @onDelete="onHandleDelete"
+      />
       <MovieAdd @createMovie="createMovie" />
     </div>
   </div>
@@ -55,7 +59,8 @@ export default {
           id: 1680439524567,
         },
       ],
-      term: ''
+      term: "",
+      filter: "popular",
     };
   },
   methods: {
@@ -71,18 +76,28 @@ export default {
       });
     },
     onHandleDelete(e) {
-      this.movies = this.movies.filter(c => c.id !== e)
+      this.movies = this.movies.filter((c) => c.id !== e);
     },
     onHandleSearch(arr, term) {
       if (term.length == 0) {
-        return arr
+        return arr;
       }
 
-      return arr.filter(c => c.name.toLowerCase().indexOf(term) > -1)
+      return arr.filter((c) => c.name.toLowerCase().indexOf(term) > -1);
+    },
+    onHandleFilter(arr, filter) {
+      switch (filter) {
+        case "popular":
+          return arr.filter((c) => c.like);
+        case "mostViewers":
+          return arr.filter((c) => c.viewers > 500);
+        default:
+          return arr
+      }
     },
     onHandleUpdateTerm(e) {
-      this.term = e
-    }
+      this.term = e;
+    },
   },
 };
 </script>

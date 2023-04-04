@@ -7,7 +7,7 @@
       />
       <div class="search-panel">
         <SearchPanel :onHandleUpdateTerm="onHandleUpdateTerm" />
-        <AppFilter />
+        <AppFilter :onHandleUpdateFilter="onHandleUpdateFilter" :filterName="filter"/>
       </div>
       <MovieList
         :movies="onHandleFilter(onHandleSearch(movies, term), filter)"
@@ -60,7 +60,7 @@ export default {
         },
       ],
       term: "",
-      filter: "popular",
+      filter: "all",
     };
   },
   methods: {
@@ -85,6 +85,9 @@ export default {
 
       return arr.filter((c) => c.name.toLowerCase().indexOf(term) > -1);
     },
+    onHandleUpdateTerm(e) {
+      this.term = e;
+    },
     onHandleFilter(arr, filter) {
       switch (filter) {
         case "popular":
@@ -95,9 +98,9 @@ export default {
           return arr
       }
     },
-    onHandleUpdateTerm(e) {
-      this.term = e;
-    },
+    onHandleUpdateFilter(e) {
+      this.filter = e
+    }
   },
 };
 </script>

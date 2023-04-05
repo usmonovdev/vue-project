@@ -5,10 +5,10 @@
         :moviesLength="movies.length"
         :viewedMovie="movies.filter((e) => e.favourite).length"
       />
-      <div class="search-panel">
+      <Box class="search-panel">
         <SearchPanel :onHandleUpdateTerm="onHandleUpdateTerm" />
         <AppFilter :onHandleUpdateFilter="onHandleUpdateFilter" :filterName="filter"/>
-      </div>
+      </Box>
       <MovieList
         :movies="onHandleFilter(onHandleSearch(movies, term), filter)"
         @onToggle="onHandleToggle"
@@ -120,9 +120,5 @@ export default {
 }
 .search-panel {
   margin-top: 2rem;
-  padding: 1.5rem;
-  background: #fcfaf5;
-  border-radius: 4px;
-  box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.15);
 }
 </style>

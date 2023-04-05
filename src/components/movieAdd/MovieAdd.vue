@@ -1,31 +1,29 @@
 <template>
-  <div class="movie-add-form">
+  <Box class="movie-add-form">
     <h3>Yangi film qo'shish</h3>
     <form class="add-form d-flex" @submit.prevent>
-      <input
-        type="text"
-        class="form-control new-movie-label"
+      <InputForm
+        class="new-movie-label"
         placeholder="Film nomi"
-        :value="name"
-        @input="name = $event.target.value"
+        v-model="name"
       />
-      <input
-        type="text"
+      <InputForm
+        type="number"
         class="form-control new-movie-label"
         placeholder="Necha marotaba ko'rilgan?"
-        :value="viewers"
-        @input="viewers = $event.target.value"
+        v-model="viewers"
       />
-      <PrimaryButton class="btn btn-outline-dark" type="submit" @click="addMovie">Qo'shish</PrimaryButton>
+      <PrimaryButton
+        class="btn btn-outline-dark"
+        type="submit"
+        @click="addMovie"
+        >Qo'shish</PrimaryButton
+      >
     </form>
-  </div>
+  </Box>
 </template>
 <script>
-import PrimaryButton from '../../ui-components/PrimaryButton.vue';
 export default {
-  components: {
-    PrimaryButton
-  },
   data() {
     return {
       name: "",
@@ -34,15 +32,15 @@ export default {
   },
   methods: {
     addMovie() {
-      if (!this.name || !this.viewers) return
+      if (!this.name || !this.viewers) return;
       const newMovie = {
         name: this.name,
         viewers: this.viewers,
         favourite: false,
         like: false,
-        id: Date.now()
+        id: Date.now(),
       };
-      this.$emit("createMovie", newMovie)
+      this.$emit("createMovie", newMovie);
     },
   },
 };
@@ -50,9 +48,5 @@ export default {
 <style>
 .movie-add-form {
   margin-top: 1.5rem;
-  padding: 1.5rem;
-  background: #fcfaf5;
-  border-radius: 4px;
-  box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.15);
 }
 </style>

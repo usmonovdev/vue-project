@@ -14,11 +14,7 @@
 </template>
 
 <script>
-import PrimaryButton from '../../ui-components/PrimaryButton.vue';
 export default {
-  components: {
-    PrimaryButton
-  },
   props: {
     onHandleUpdateFilter: {
       type: Function,

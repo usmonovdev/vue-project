@@ -16,12 +16,16 @@
         :value="viewers"
         @input="viewers = $event.target.value"
       />
-      <button class="btn btn-outline-dark" type="submit" @click="addMovie">Qo'shish</button>
+      <PrimaryButton class="btn btn-outline-dark" type="submit" @click="addMovie">Qo'shish</PrimaryButton>
     </form>
   </div>
 </template>
 <script>
+import PrimaryButton from '../../ui-components/PrimaryButton.vue';
 export default {
+  components: {
+    PrimaryButton
+  },
   data() {
     return {
       name: "",

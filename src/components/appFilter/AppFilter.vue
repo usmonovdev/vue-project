@@ -1,6 +1,6 @@
 <template>
   <div class="btn-group">
-    <button
+    <PrimaryButton
       v-for="btn in filterButton"
       :key="btn.name"
       class="btn"
@@ -9,15 +9,15 @@
       :class="[filterName === btn.name ? 'btn-dark' : 'btn-outline-dark']"
     >
       {{ btn.title }}
-    </button>
+    </PrimaryButton>
   </div>
 </template>
 
 <script>
-import ButtonFilter from "../button/ButtonFilter.vue";
+import PrimaryButton from '../../ui-components/PrimaryButton.vue';
 export default {
   components: {
-    ButtonFilter,
+    PrimaryButton
   },
   props: {
     onHandleUpdateFilter: {

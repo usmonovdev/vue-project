@@ -7,7 +7,10 @@
       />
       <Box class="search-panel">
         <SearchPanel :onHandleUpdateTerm="onHandleUpdateTerm" />
-        <AppFilter :onHandleUpdateFilter="onHandleUpdateFilter" :filterName="filter"/>
+        <AppFilter
+          :onHandleUpdateFilter="onHandleUpdateFilter"
+          :filterName="filter"
+        />
       </Box>
       <MovieList
         :movies="onHandleFilter(onHandleSearch(movies, term), filter)"
@@ -25,6 +28,7 @@ import SearchPanel from "../searchPanel/SearchPanel.vue";
 import AppFilter from "../appFilter/AppFilter.vue";
 import MovieList from "../movieList/MovieList.vue";
 import MovieAdd from "../movieAdd/MovieAdd.vue";
+import axios from "axios"
 
 export default {
   components: {
@@ -37,30 +41,11 @@ export default {
   data() {
     return {
       movies: [
-        {
-          name: "Omar",
-          viewers: 811,
-          favourite: false,
-          like: true,
-          id: 1680439521234,
-        },
-        {
-          name: "Empire of osman",
-          viewers: 632,
-          favourite: false,
-          like: false,
-          id: 1680439523241,
-        },
-        {
-          name: "Ertugrul",
-          viewers: 745,
-          favourite: true,
-          like: false,
-          id: 1680439524567,
-        },
+        
       ],
       term: "",
       filter: "all",
+      awesome: true,
     };
   },
   methods: {
@@ -95,12 +80,33 @@ export default {
         case "mostViewers":
           return arr.filter((c) => c.viewers > 500);
         default:
-          return arr
+          return arr;
       }
     },
     onHandleUpdateFilter(e) {
-      this.filter = e
-    }
+      this.filter = e;
+    },
+    async fetchData() {
+      try {
+        const response = await axios.get("https://jsonplaceholder.typicode.com/posts?_limit=10")
+        const newArr = response.data.map(data => ({
+          name: data.title,
+          viewers: data.id * 43,
+          favourite: false,
+          like: false,
+          id: data.id,
+        }));
+        this.movies = newArr
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+    mounted() {
+      this.fetchData()
+    },
+  },
+  mounted() {
+    this.fetchData()
   },
 };
 </script>

@@ -12,11 +12,34 @@
           :filterName="filter"
         />
       </Box>
+      <Box
+        v-if="!movies.length && !isLoading"
+        class="d-flex justify-content-center"
+        >No Items!</Box
+      >
+      <Box v-else-if="isLoading" class="d-flex justify-content-center"
+        ><Loader
+      /></Box>
       <MovieList
+        v-else="movies.length"
         :movies="onHandleFilter(onHandleSearch(movies, term), filter)"
         @onToggle="onHandleToggle"
         @onDelete="onHandleDelete"
       />
+      <Box class="d-flex justify-content-center" v-if="!isLoading">
+        <nav aria-label="pagination">
+          <ul class="pagination pagination-sm">
+            <li
+              v-for="pageNumber in totalPages"
+              class="page-item"
+              :class="{ active: pageNumber === page }"
+              @click="onChangePage(pageNumber)"
+            >
+              <span class="page-link">{{ pageNumber }}</span>
+            </li>
+          </ul>
+        </nav>
+      </Box>
       <MovieAdd @createMovie="createMovie" />
     </div>
   </div>
@@ -28,7 +51,7 @@ import SearchPanel from "../searchPanel/SearchPanel.vue";
 import AppFilter from "../appFilter/AppFilter.vue";
 import MovieList from "../movieList/MovieList.vue";
 import MovieAdd from "../movieAdd/MovieAdd.vue";
-import axios from "axios"
+import axios from "axios";
 
 export default {
   components: {
@@ -40,12 +63,14 @@ export default {
   },
   data() {
     return {
-      movies: [
-        
-      ],
+      movies: [],
       term: "",
       filter: "all",
       awesome: true,
+      isLoading: false,
+      limit: 10,
+      page: 1,
+      totalPages: 100,
     };
   },
   methods: {
@@ -67,7 +92,6 @@ export default {
       if (term.length == 0) {
         return arr;
       }
-
       return arr.filter((c) => c.name.toLowerCase().indexOf(term) > -1);
     },
     onHandleUpdateTerm(e) {
@@ -88,26 +112,46 @@ export default {
     },
     async fetchData() {
       try {
-        const response = await axios.get("https://jsonplaceholder.typicode.com/posts?_limit=10")
-        const newArr = response.data.map(data => ({
+        this.isLoading = true;
+        const response = await axios.get(
+          "https://jsonplaceholder.typicode.com/posts",
+          {
+            params: {
+              _limit: this.limit,
+              _page: this.page,
+            },
+          }
+        );
+        const newArr = response.data.map((data) => ({
           name: data.title,
           viewers: data.id * 43,
           favourite: false,
           like: false,
           id: data.id,
         }));
-        this.movies = newArr
+        this.totalPages = Math.ceil(
+          response.headers["x-total-count"] / this.limit
+        );
+        console.log(this.totalPages);
+        this.movies = newArr;
       } catch (error) {
         console.log(error.message);
+      } finally {
+        this.isLoading = false;
       }
     },
-    mounted() {
-      this.fetchData()
+    onChangePage(e) {
+      this.page = e
     },
   },
   mounted() {
-    this.fetchData()
+    this.fetchData();
   },
+  watch: {
+    page() {
+      this.fetchData()
+    }
+  }
 };
 </script>
 
